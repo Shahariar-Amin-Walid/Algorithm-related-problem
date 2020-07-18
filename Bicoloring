@@ -1,0 +1,69 @@
+Bicoloring is a common beginner level problem in bfs,you can find this problem here(https://onlinejudge.org/external/100/10004.pdf) . 
+In this problem we can use only two color(let black and white).If we coloring a node with black,we cann't color its adjacent node black,we have to color them white.
+Let,we have a node(node-1) which has 3 adjacent node(node-2,3,4),node 2 has 2 adjacent node(5,6).If we color wtite to node 1,we have to color black to node 2,3 and 4.
+But we can not use black color for node 5,6.We have to color them white.If you understand the problem statement then go to the next paragraph....
+
+In this problem we have to give n(number of nodes) and m(number of edges) as input.This program stop taking input when n==0;
+to avoid complex code I separate the code in two function one is main function and another is bfs function(bool type).
+//code:
+#include<bits/stdc++.h>
+using namespace std;
+#define pb push_back
+int n,m;
+bool bfs( )
+{
+	vector<int>g[n+1];
+	int l[n+1];
+	memset(l,0,sizeof(l));
+	while(m--)
+	{
+		int x,y;
+		cin>>x>>y;
+		g[x].pb(y);
+		g[y].pb(x);
+	}
+	queue<int>q;
+	q.push(0);
+	l[0]=0;
+	while(!q.empty( ))
+	{
+		int a=q.front( );
+		q.pop( );
+		int s=g[a].size( );
+	    for (int i=0;i<s;i++)
+        {
+            int b=g[a][i];
+            if(!l[b])
+            {
+                q.push(b);
+                l[b]=l[a]+1;
+            }
+            else if(l[b]==l[a])return 1;
+        }
+	}
+	return 0;
+}
+
+int main( )
+{
+    //code by noob coder BD(Shahariar)
+	ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    while( cin>>n && n )
+    {
+        cin>>m;
+        if ( bfs() )cout<<"NOT BICOLORABLE.\n";
+        else cout<<"BICOLORABLE.\n";
+    }
+    return 0;
+	
+}
+At line no 50,we write a while loop with condition (cin>>n && n),This condition wll be true when n>0.Then we take m(number of edges) as input.then we call bfs( )function.
+In that function we need a vector that can store the information of a graph.then we need a array which can store the information of node level.
+We need a queue data structure to implement the bfs algorithm.We push source node(here node 0) to the queue.The level of the node is 0.
+As our queue is non empty,So our code goes through the while loop in line 25.then we check if a node has corresponding level or not.
+If not we level it(see line 36),If two level is same it is not possible to bicolor the graph,else possible.
+Writer:
+      Shahariar Amin
+      Dept of CSE,RUET.
