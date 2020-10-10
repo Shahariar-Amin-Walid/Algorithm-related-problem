@@ -1,0 +1,84 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll      long long
+#define ld      long double
+#define nl      cout<<endl
+#define pb      push_back
+#define pob     pop_back
+#define pf      push_front
+#define pof     pop_front
+#define mp      make_pair
+#define ff      first
+#define ss      second
+#define PI      3.1415926535897932384626
+#define mod     1000000007
+#define all(x)  x.begin( ),x.end( )
+#define stl     vector
+#define dt      int
+//dfs:
+    #define white 1       //কোন নোড নন ভিজিটেড কিনা।
+    #define grey  2		  //কোন নোড ভিজিট করা শুরু হয়েছে কিনা।
+    #define black 3       // কোন নোড ভিজিটেড করা শেষ হয়েছে কিনা।
+#define LP(i, X) for (int i = 0; i < X;i++)
+int N, E;
+int a[100][100];
+int clr[100];
+void dfs(int x)
+{
+	clr[x] = grey;
+	LP(i,N){
+		if(a[x][i] == 1 && clr[i] == white){
+			dfs(i);//রিকার্সিভ কল।
+		}
+	}
+	clr[x] = black;
+}
+void solve( )
+{
+	int cnt = 0;
+	//গ্রাফ ইনপুট নেওয়া।
+	int n1, n2;
+	cin >> N >> E;
+	LP(i,E){
+		cin >> n1 >> n2;
+		a[n1][n2] = 1;
+		a[n2][n1] = 1;
+	}
+	//সকল নোডকে হোয়াইট করা।
+	LP(i, N)
+	    clr[i] = white;
+    //সকল নন ভিজিটেড নোডকে ভিজিট করা।
+	LP(i,N){
+		if(clr[i]==white){
+			dfs(i);//ডি এফ এস
+			++cnt;//ডিসকানেকশন কাউন্ট করা।
+		}
+	}
+	cout << cnt << endl;
+}
+
+void sio( )
+{
+    ios_base::sync_with_stdio(0);
+	cin.tie(0);
+
+	#ifndef ONLINE_JUDGE
+	freopen("INPUT.txt", "r", stdin);
+	freopen("OUTPUT.txt", "w", stdout);
+	#endif
+
+}
+
+int main( )
+{
+	//Shahariar_RUET_CSE_19;
+    sio( );
+	int t=1;
+	//cin>>t;
+	while(t--)
+	{
+		solve( );
+	}
+	return 0;
+}
