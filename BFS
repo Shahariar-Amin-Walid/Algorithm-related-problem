@@ -1,0 +1,105 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll      long long
+#define ld      long double
+#define nl      cout<<endl
+#define pb      push_back
+#define pob     pop_back
+#define pf      push_front
+#define pof     pop_front
+#define mp      make_pair
+#define ff      first
+#define ss      second
+#define PI      3.1415926535897932384626
+#define mod     1000000007
+#define all(x)  x.begin( ),x.end( )
+#define stl     vector
+#define dt      int
+//dfs:
+    #define white 1
+	#define grey 2
+    #define black 3
+#define LP(i, X) for (int i = 0; i < X;i++)
+void show(stl<dt>&v)
+{
+	stl<dt>::iterator itr = v.begin( );
+	for(;itr!=v.end( );itr++){
+		cout<<*itr<<" ";
+	}
+	cout<<endl;
+}
+int N,E;
+int a[100][100];//storing graph
+int clr[100];//storing the color of Nodes
+int dis[100];//distnce of one node to another
+int parent[100];//parent node of a node
+int stime[100];//starting time of a node visit
+ftime[100];//finishing(ending) time of a nde visit
+void bfs(int starting_node)
+{
+	LP(i, N)
+	{
+		clr[i] = white;
+		dis[i] = INT_MIN;
+		parent[i] = -1;
+	}
+	dis[starting_node] = 0;
+	parent[starting_node] = -1;
+	queue<int> q;
+	q.push(starting_node);
+
+	while(!q.empty( ))
+	{
+		int x = q.front();
+		q.pop();
+		clr[x] = grey;
+		LP(i,N){
+			if(a[x][i]==1&&clr[i]==white){
+				q.push(i);
+				parent[i] = x;
+				dis[i] = dis[x] + 1;
+			}
+		}
+		clr[x] = black;
+	}
+}
+void solve( )
+{
+	//taking input
+	int n1, n2;
+	cin >> N >> E;
+	LP(i,E){
+		cin >> n1 >> n2;
+		a[n1][n2] = 1;
+		a[n2][n1] = 1;
+	}
+	int starting_node;
+	cin >> starting_node;
+	bfs(starting_node);
+}
+
+void sio( )
+{
+    ios_base::sync_with_stdio(0);
+	cin.tie(0);
+
+	#ifndef ONLINE_JUDGE
+	freopen("INPUT.txt", "r", stdin);
+	freopen("OUTPUT.txt", "w", stdout);
+	#endif
+
+}
+
+int main( )
+{
+	//Shahariar_RUET_CSE_19;
+    sio( );
+	int t=1;
+	//cin>>t;
+	while(t--)
+	{
+		solve( );
+	}
+	return 0;
+}
